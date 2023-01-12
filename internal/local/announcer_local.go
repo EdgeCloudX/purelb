@@ -207,13 +207,13 @@ func (a *announcer) announceLocal(svc *v1.Service, announceInt netlink.Link, lbI
 
 	// Local addresses do not support ExternalTrafficPolicyLocal
 	// Set the service back to ExternalTrafficPolicyCluster if adding to local interface
-	if svc.Spec.ExternalTrafficPolicy == v1.ServiceExternalTrafficPolicyTypeLocal {
-		l.Log("op", "setBalancer", "error", "ExternalTrafficPolicy Local not supported on local Interfaces, setting to Cluster")
-		svc.Spec.ExternalTrafficPolicy = v1.ServiceExternalTrafficPolicyTypeCluster
-		if err := a.deleteAddress(nsName, "ClusterLocal", lbIP); err != nil {
-			return err
-		}
-	}
+	//if svc.Spec.ExternalTrafficPolicy == v1.ServiceExternalTrafficPolicyTypeLocal {
+	//	l.Log("op", "setBalancer", "error", "ExternalTrafficPolicy Local not supported on local Interfaces, setting to Cluster")
+	//	svc.Spec.ExternalTrafficPolicy = v1.ServiceExternalTrafficPolicyTypeCluster
+	//	if err := a.deleteAddress(nsName, "ClusterLocal", lbIP); err != nil {
+	//		return err
+	//	}
+	//}
 
 	// We can announce the address if we win the election
 	if winner := a.election.Winner(lbIP.String()); winner == a.myNode {
